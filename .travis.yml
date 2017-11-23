@@ -1,0 +1,12 @@
+before_deploy:
+- pip install -t . pyjq
+- pip install -t . requests
+- zip -r lambda-optima-markups.zip .
+
+deploy:
+  provider: releases
+  api_key:
+    secure: Q/e2Nu5MT3jqt0+sl9jpIx04+GYHmvraOihHZf5sY1WRcRT+T5KvHoza5t/XujIvY8ORwwTwMu0qOxfSYmG2jzMIsv24D2zCVShQDvYs9ARtp1ZT5i1sVfofdMZiviXWGhggrhptNOWN6l7eEwdOQAVXtW5UWZPB52QUyt6hI2I9k6Qb/voaRfSJY5ChgzpbCgG90h+64yjqHS4YbQhfcvpbHo1GTLr0CuiqmW5mLbsa8lCdlSsUrYncGVAdnNzDrTRo1FcDpXDHKe6NdHS3TXYaYz9JSJUFV/gRc+ON8FnZstVOTDiwr+z7qYJenxMd3tIf/dnbw+2n8sYJVvEAZAuoVrtY+BLlawDTi4FA8Gzq8oP27nubZcb8/uok4JNE3KA1vWYVRfsA5x0h+/hvz+a+xMpRnzyX9FhSNO2412yAB+F7jf6qUrDOeENAWvwfQ1r0l17MnNTjZz3rho/frLUh7TfbnedDTSp+v91/eUDO3CvV2JHcSVbAo221SbfTesBntKZjKM0tdbP3h5dwGk7mvceVgjRvPZ9IiWQX3ru9BV6duN3J8D9XNpZYfw7u6I5plc3X0sphTAVQgTLJ+JtnHsBjBcbFRcrEOJomwvLI69kAzz2E3QQqSOgHFOa/jArNPiCctwo7SK/0nBu/r6GbquH3hsRUJJoOrj/C8oo=
+  file: lambda-optima-markups.zip
+  on:
+    repo: rs-services/lambda-optima-markups
