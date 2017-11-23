@@ -33,7 +33,6 @@ def grs_list_projects(access_token):
     }
     project_list_response = session.get(uri, headers=headers)
     project_list_json_object = json.loads(project_list_response.text)
-    logger.info(project_list_response.text)
     return project_list_json_object
 
 def ca_add_markup(access_token, account_href, public_cloud_vendors, name, percentage):
@@ -50,6 +49,7 @@ def ca_add_markup(access_token, account_href, public_cloud_vendors, name, percen
         "percentage": percentage,
         "public_cloud_vendors": public_cloud_vendors
     }
+    # TODO: Evaluate the response and report errors
     markup_response = session.post(uri, headers=headers, data=json.dumps(data))
 
 def ca_remove_markup(access_token, markup_href):
@@ -59,6 +59,7 @@ def ca_remove_markup(access_token, markup_href):
         "Authorization": "Bearer {}".format(access_token),
         "content-type": "application/json"
     }
+    # TODO: Evaluate the response and report errors
     markup_response = session.delete(markup_href, headers=headers)
 
 def ca_list_markups(access_token):
@@ -71,7 +72,6 @@ def ca_list_markups(access_token):
         "content-type": "application/json"
     }
     markup_response = session.get(uri, headers=headers)
-    logger.info(markup_response.text)
     return json.loads(markup_response.text)
 
 def add_markup_handler(event, context):
@@ -99,7 +99,7 @@ def add_markup_handler(event, context):
                 os.environ['aws_markup_percent']
             )
         else:
-            logger.info("AWS Markup already existed for account {}".format(project['id']))
+            logger.info("AWS Markup already existed for project {}".format(project['id']))
 
         jq_query = '.[] | select(.account_href == "/api/accounts/{}" and .name == "BULK ADDED - Azure") | .href'.format(project['id'])
         existing_azure_markups = pyjq.all(jq_query, existing_markups)
@@ -113,7 +113,7 @@ def add_markup_handler(event, context):
                 os.environ['azure_markup_percent']
             )
         else:
-            logger.info("Azure Markup already existed for account {}".format(project['id']))
+            logger.info("Azure Markup already existed for project {}".format(project['id']))
 
 
 def remove_markup_handler(event, context):
