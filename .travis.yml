@@ -1,6 +1,6 @@
 language: python
 
-before_deploy:
+script:
 - pip install -t . pyjq
 - pip install -t . requests
 - zip -r lambda-optima-markups.zip .
