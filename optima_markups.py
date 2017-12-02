@@ -44,13 +44,16 @@ def oauth_authentication(shard, refresh_token):
     response_json_obj = json.loads(response.text)
     return response_json_obj
 
-def grs_list_projects(access_token):
+def grs_list_projects(access_token, org_id, shard):
     """Returns the list of all RightScale projects (accounts) belonging to the
-    org specified in the `org_id` environment variable.
+    org provided.
 
     Args:
         access_token (:obj:`str`): A RightScale API access token returned by
             oauth_authentication()
+        org_id (:obj:`str`): The RightScale organization ID to act upon
+        shard (:obj:`str`): The RightScale shard hostname (I.E
+            us-3.rightscale.com, us-4.rightscale.com, telstra-10.rightscale.com)
 
     Returns:
         :obj:`dict`: The an object representing the JSON payload of this API
@@ -58,7 +61,7 @@ def grs_list_projects(access_token):
     """
     logger = getLogger()
     session = Session()
-    uri = "https://{}/grs/orgs/{}/projects".format(os.environ['shard'],os.environ['org_id'])
+    uri = "https://{}/grs/orgs/{}/projects".format(shard,org_id)
     headers = {
         "X-API-Version": "2.0",
         "Authorization": "Bearer {}".format(access_token),
@@ -162,11 +165,11 @@ def add_markup_handler(event, context):
     logger = getLogger()
     # Get access token first
     response_json_obj = oauth_authentication(
-        os.environ['shard'],
-        os.environ['refresh_token']
+        event['shard'],
+        event['refresh_token']
         )
     access_token = response_json_obj['access_token']
-    projects = grs_list_projects(access_token)
+    projects = grs_list_projects(access_token, event['org_id'], event['shard'])
     existing_markups = ca_list_markups(access_token)
 
     for project in projects:
@@ -180,7 +183,7 @@ def add_markup_handler(event, context):
                 "/api/accounts/{}".format(project['id']),
                 ["Amazon Web Services"],
                 "BULK ADDED - AWS",
-                os.environ['aws_markup_percent']
+                event['aws_markup_percent']
             )
         else:
             logger.info("AWS Markup already existed for project {}".format(project['id']))
@@ -194,7 +197,7 @@ def add_markup_handler(event, context):
                 "/api/accounts/{}".format(project['id']),
                 ["Microsoft Azure","Azure Resource Manager"],
                 "BULK ADDED - Azure",
-                os.environ['azure_markup_percent']
+                event['azure_markup_percent']
             )
         else:
             logger.info("Azure Markup already existed for project {}".format(project['id']))
@@ -204,8 +207,8 @@ def remove_markup_handler(event, context):
     logger = getLogger()
     # Get access token first
     response_json_obj = oauth_authentication(
-        os.environ['shard'],
-        os.environ['refresh_token']
+        event['shard'],
+        event['refresh_token']
         )
     access_token = response_json_obj['access_token']
     # TODO: This could conceivably iterate over everything that belongs to a
