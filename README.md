@@ -1,11 +1,15 @@
 # lambda-optima-markups
 A python lambda function for adding RightScale Optima markups
 
-# Environment Variables
-The Python script requires the following environment variables.
+# Usage
+Generate a RightScale oAuth [token](http://docs.rightscale.com/cm/dashboard/settings/account/enable_oauth#overview)
 
-* aws_markup_percent: The percentage markup you'd like to add for AWS in Optima
-* azure_markup_percent: The percentage markup you'd like to add for Azure in Optima
-* org_id: The ID of your RightScale organization
-* refresh_token: Your RightScale oAuth refresh token
-* shard: The hostname of the RightScale shard you're using (us-3.rightscale.com, us-4.rightscale.com, telstra-10.rightscale.com)
+Upload the following CAT files to RightScale SelfService - [Upload directions here](http://docs.rightscale.com/ss/guides/ss_testing_CATs.html#uploading-the-cat)
+* [Sys log library](https://raw.githubusercontent.com/rightscale/rightscale-plugins/f01625b856cb4743ecb1f4ee3093bb39c3e81810/libraries/sys_log.rb)
+* [AWS Cloud Formation Plugin](https://raw.githubusercontent.com/rightscale/rightscale-plugins/f01625b856cb4743ecb1f4ee3093bb39c3e81810/aws/rs_aws_cft/aws_cft_plugin.rb)
+* [AWS Lambda Plugin](https://raw.githubusercontent.com/rightscale/rightscale-plugins/f01625b856cb4743ecb1f4ee3093bb39c3e81810/aws/rs_aws_lambda/aws_lambda_plugin.rb)
+* [Lambda Optima Markups](scheduler.cat.rb)
+
+Launch CloudApp
+
+Prosper
