@@ -9,6 +9,7 @@ A python lambda function for adding RightScale Optima markups to all accounts in
   * [Sys log library](https://raw.githubusercontent.com/rightscale/rightscale-plugins/f01625b856cb4743ecb1f4ee3093bb39c3e81810/libraries/sys_log.rb)
   * [AWS Cloud Formation Plugin](https://raw.githubusercontent.com/rightscale/rightscale-plugins/f01625b856cb4743ecb1f4ee3093bb39c3e81810/aws/rs_aws_cft/aws_cft_plugin.rb)
   * [AWS Lambda Plugin](https://raw.githubusercontent.com/rightscale/rightscale-plugins/f01625b856cb4743ecb1f4ee3093bb39c3e81810/aws/rs_aws_lambda/aws_lambda_plugin.rb)
+  * [S3 Lambda Inception Pacakge](https://github.com/rgeyer/s3-lambda-inception/releases/tag/latest)
   * [Lambda Optima Markups](scheduler.cat.rb)
 1. Launch CloudApp using the appropriate values from steps 2 and 3
 1. Prosper
